@@ -11,5 +11,13 @@ namespace TopDownSurvivors.Player
         public PlayerInputReader InputReader => inputReader;
         public Rigidbody2D Body => body;
         public float MovementSpeed => movementSpeed;
+
+        private void FixedUpdate()
+        {
+            if (body != null && inputReader != null)
+            {
+                body.linearVelocity = inputReader.Movement * movementSpeed;
+            }
+        }
     }
 }

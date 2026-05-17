@@ -11,7 +11,7 @@ namespace TopDownSurvivors.Player
 
         private void OnEnable()
         {
-            if (moveAction != null)
+            if (moveAction != null && moveAction.action != null)
             {
                 moveAction.action.Enable();
             }
@@ -19,15 +19,25 @@ namespace TopDownSurvivors.Player
 
         private void OnDisable()
         {
-            if (moveAction != null)
+            if (moveAction != null && moveAction.action != null)
             {
                 moveAction.action.Disable();
             }
         }
 
+        private void Update()
+        {
+            if (moveAction != null && moveAction.action != null)
+            {
+                Movement = moveAction.action.ReadValue<Vector2>();
+            }
+        }
+
         public void ReadMovementForStructurePreview()
         {
-            Movement = moveAction != null ? moveAction.action.ReadValue<Vector2>() : Vector2.zero;
+            Movement = moveAction != null && moveAction.action != null 
+                ? moveAction.action.ReadValue<Vector2>() 
+                : Vector2.zero;
         }
     }
 }
