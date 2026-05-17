@@ -14,6 +14,27 @@ namespace TopDownSurvivors.Fear
         public int CurrentFearValue { get; private set; }
         public FearRangeSO CurrentRange { get; private set; }
 
+        // ¡AÑADIMOS EL UPDATE! Esto hace que el tiempo y el miedo avancen en tiempo real
+        private void Update()
+        {
+            // Acumulamos el tiempo de la partida
+            ElapsedSeconds += Time.deltaTime;
+
+            // Simulamos el crecimiento del miedo por tiempo: sube 1 punto cada 2 segundos.
+            // (Si en tu 'FearProgressionSO' hay otra lógica, luego la adaptas).
+            int calculatedFear = Mathf.FloorToInt(ElapsedSeconds / 2f);
+            CurrentFearValue = Mathf.Clamp(calculatedFear, 0, 100);
+
+            // Buscamos el rango actual usando tu ScriptableObject
+            if (progression != null)
+            {
+                CurrentRange = progression.GetRange(CurrentFearValue);
+            }
+
+            // Notificamos automáticamente al HUDController (y a los demás sistemas)
+            NotifyObservers();
+        }
+
         public void Register(IFearObserver observer)
         {
             if (observer != null && !observers.Contains(observer))
@@ -47,4 +68,4 @@ namespace TopDownSurvivors.Fear
             }
         }
     }
-}
+}   
