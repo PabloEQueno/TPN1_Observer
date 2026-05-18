@@ -1,5 +1,6 @@
 using UnityEngine;
-using TopDownSurvivors.Player; // Necesario para buscar al jugador y sumarle XP
+using TopDownSurvivors.Player;
+using TopDownSurvivors.UI;
 
 namespace TopDownSurvivors.Enemies
 {
@@ -16,10 +17,17 @@ namespace TopDownSurvivors.Enemies
             if (isDead) return; 
             isDead = true;
 
-            PlayerExperience playerXP = FindFirstObjectByType<PlayerExperience>();
-            if (playerXP != null && xpDrop != null)
+            GameObject playerObj = GameObject.FindWithTag("Player");
+            if (playerObj != null && playerObj.TryGetComponent(out PlayerExperience playerXP))
             {
-                playerXP.AddXP(xpDrop.XPAmount);
+                int xpGained = xpDrop != null ? xpDrop.XPAmount : 5;
+                playerXP.AddXP(xpGained);
+            }
+
+            HUDController hud = FindFirstObjectByType<HUDController>();
+            if (hud != null)
+            {
+                hud.RegisterEnemyDeath(100); 
             }
 
             Destroy(gameObject);

@@ -16,11 +16,16 @@ namespace TopDownSurvivors.Menus
         {
             timeService?.Pause();
             gameManager?.SetState(GameState.LevelUp);
+            
+                if (levelUpUI != null)
+            {
+                levelUpUI.Show();
+            }
         }
 
         public void ChoosePower(PowerSO power)
         {
-            powerApplier?.ApplyPower(power);
+            
             levelUpUI?.Hide();
             timeService?.Resume();
             gameManager?.SetState(GameState.Playing);

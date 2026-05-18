@@ -8,6 +8,8 @@ namespace TopDownSurvivors.Enemies
         [SerializeField] private Transform target;
         [SerializeField, Min(0f)] private float movementSpeed = 1f;
 
+        [Header("Optimización de Rendimiento")]
+        [SerializeField, Min(10f)] private float maxDistanceFromPlayer = 22f;
         public Rigidbody2D Body => body;
         public Transform Target => target;
         public float MovementSpeed => movementSpeed;
@@ -15,6 +17,18 @@ namespace TopDownSurvivors.Enemies
         public void SetTarget(Transform nextTarget)
         {
             target = nextTarget;
+        }
+
+        private void Update()
+        {
+            if (target == null) return;
+
+            float currentDistance = Vector2.Distance(transform.position, target.position);
+
+            if (currentDistance > maxDistanceFromPlayer)
+            {
+                Destroy(gameObject);
+            }
         }
 
         private void FixedUpdate()

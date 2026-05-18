@@ -9,16 +9,17 @@ namespace TopDownSurvivors.UI
         [SerializeField] private Slider xpSlider;
         [SerializeField] private TMP_Text xpText;
 
-        public void SetXP(int currentXP, int requiredXP)
+        public void UpdateXP(int currentXP, int requiredXP)
         {
             if (xpSlider != null)
             {
-                xpSlider.value = requiredXP > 0 ? (float)currentXP / requiredXP : 0f;
+                xpSlider.maxValue = requiredXP;
+                xpSlider.value = currentXP;
             }
 
             if (xpText != null)
             {
-                xpText.text = $"{currentXP}/{requiredXP}";
+                xpText.text = $"XP: {currentXP} / {requiredXP}";
             }
         }
     }
