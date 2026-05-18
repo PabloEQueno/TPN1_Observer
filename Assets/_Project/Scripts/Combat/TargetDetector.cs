@@ -16,5 +16,30 @@ namespace TopDownSurvivors.Combat
         {
             currentTarget = target;
         }
+        private void Update()
+        {
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, detectionRadius, targetLayers);
+            
+            Transform closestEnemy = null;
+            float minDistance = Mathf.Infinity;
+
+            foreach (Collider2D col in colliders)
+            {
+                float distance = Vector2.Distance(transform.position, col.transform.position);
+                if (distance < minDistance)
+                {
+                    minDistance = distance;
+                    closestEnemy = col.transform;
+                }
+            }
+
+            currentTarget = closestEnemy;
+        }
+
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, detectionRadius);
+        }
     }
 }
