@@ -16,5 +16,19 @@ namespace TopDownSurvivors.Enemies
         {
             target = nextTarget;
         }
+
+        private void FixedUpdate()
+        {
+            if (body != null && target != null)
+            {
+                Vector2 direction = ((Vector2)target.position - body.position).normalized;
+                
+                body.linearVelocity = direction * movementSpeed;
+            }
+            else if (body != null)
+            {
+                body.linearVelocity = Vector2.zero;
+            }
+        }
     }
 }
