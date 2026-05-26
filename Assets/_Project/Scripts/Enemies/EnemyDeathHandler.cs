@@ -18,6 +18,11 @@ namespace TopDownSurvivors.Enemies
             if (isDead) return; 
             isDead = true;
 
+            if (AudioManager.Instance != null && AudioManager.Instance.EnemyDeathClip != null)
+            {
+                AudioManager.Instance.PlaySFX(AudioManager.Instance.EnemyDeathClip);
+            }
+
             GameObject playerObj = GameObject.FindWithTag("Player");
             if (playerObj != null && playerObj.TryGetComponent(out PlayerExperience playerXP))
             {
@@ -30,10 +35,7 @@ namespace TopDownSurvivors.Enemies
             {
                 hud.RegisterEnemyDeath(100); 
             }
-            if (AudioManager.Instance != null)
-            {
-                AudioManager.Instance.PlaySFX(AudioManager.Instance.EnemyDeathClip);
-            }
+
             Destroy(gameObject);
         }
     }

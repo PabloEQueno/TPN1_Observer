@@ -59,11 +59,11 @@ namespace TopDownSurvivors.Audio
 
                     if (musicSource.clip == gameLoopMusic)
                     {
-                        musicSource.volume = 0.8f; 
+                        musicSource.volume = 0.5f; 
                     }
                     else
                     {
-                        musicSource.volume = 0.8f;
+                        musicSource.volume = 0.4f;
                         ChangeMusic(gameLoopMusic);
                     }
                     break;
