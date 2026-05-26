@@ -18,7 +18,6 @@ GameObject:
   - component: {fileID: 5904470479153528131}
   - component: {fileID: 4449030374905916677}
   - component: {fileID: 410522360034546169}
-  - component: {fileID: 2182029735474163250}
   m_Layer: 6
   m_Name: Enemy2
   m_TagString: Enemy
@@ -256,25 +255,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TopDownSurvivors.Enemies.EnemyXPDrop
   xpAmount: 5
---- !u!95 &2182029735474163250
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7234052288275401477}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 2f4a22dfac8b8804b87b171ba2db4d23, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
