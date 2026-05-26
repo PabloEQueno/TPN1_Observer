@@ -8,6 +8,7 @@ namespace TopDownSurvivors.Menus
         [SerializeField] private string gameSceneName = "Game";
         [SerializeField] private GameObject optionsPanel;
 
+       
         public void Play()
         {
             sceneLoader?.LoadScene(gameSceneName);

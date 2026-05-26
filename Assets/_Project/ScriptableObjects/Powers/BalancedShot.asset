@@ -17,4 +17,4 @@ MonoBehaviour:
   description: Mejora levemente dano y cadencia.
   icon: {fileID: 0}
   damageBonus: 1
-  shotsPerSecondBonus: 0.15
+  shotsPerSecondBonus: 0.2

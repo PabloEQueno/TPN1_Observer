@@ -16,5 +16,5 @@ MonoBehaviour:
   displayName: Damage Up
   description: Aumenta el dano de la bala.
   icon: {fileID: 0}
-  damageBonus: 2
+  damageBonus: 3
   shotsPerSecondBonus: 0

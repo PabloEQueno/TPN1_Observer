@@ -1,4 +1,5 @@
 using UnityEngine;
+using TopDownSurvivors.Audio;
 
 namespace TopDownSurvivors.Combat
 {
@@ -53,7 +54,8 @@ namespace TopDownSurvivors.Combat
         {
             Vector3 spawnPosition = firePoint != null ? firePoint.position : transform.position;
             Projectile newProjectile = Instantiate(projectilePrefab, spawnPosition, Quaternion.identity);
-
+            
+            
             if (newProjectile != null)
             {
                 Vector2 direction = ((Vector2)target.position - (Vector2)spawnPosition).normalized;
@@ -64,6 +66,8 @@ namespace TopDownSurvivors.Combat
                     newProjectile.DamageDealer.SetDamage(weaponStats.Damage);
                 }
             }
+            
+            if (AudioManager.Instance != null) AudioManager.Instance.PlayShoot();
         }
     }
 }

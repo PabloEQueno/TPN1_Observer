@@ -1,6 +1,7 @@
 using UnityEngine;
 using TopDownSurvivors.Player;
 using TopDownSurvivors.UI;
+using TopDownSurvivors.Audio;
 
 namespace TopDownSurvivors.Enemies
 {
@@ -29,7 +30,10 @@ namespace TopDownSurvivors.Enemies
             {
                 hud.RegisterEnemyDeath(100); 
             }
-
+            if (AudioManager.Instance != null)
+            {
+                AudioManager.Instance.PlaySFX(AudioManager.Instance.EnemyDeathClip);
+            }
             Destroy(gameObject);
         }
     }
