@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Monster_Basic
   m_EditorClassIdentifier: 
   monsterName: Basic
-  prefab: {fileID: 2552746420314462065, guid: 2ef3bef31c24ae74e8688d04ba9a1cb2, type: 3}
+  prefab: {fileID: 3034946727750794810, guid: dda3636376b7b2e47948ffa2a449e514, type: 3}
   maxHealth: 8
   movementSpeed: 1.8
   contactDamage: 1

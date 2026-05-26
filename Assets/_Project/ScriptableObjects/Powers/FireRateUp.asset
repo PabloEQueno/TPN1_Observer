@@ -17,4 +17,4 @@ MonoBehaviour:
   description: Aumenta la cadencia de disparo.
   icon: {fileID: 0}
   damageBonus: 0
-  shotsPerSecondBonus: 0.35
+  shotsPerSecondBonus: 0.4

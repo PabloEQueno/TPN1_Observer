@@ -12,5 +12,24 @@ namespace TopDownSurvivors.Progression
         public IReadOnlyList<PowerSO> AvailablePowers => availablePowers;
         public int ChoicesPerLevelUp => choicesPerLevelUp;
         public PowerApplier PowerApplier => powerApplier;
+
+        public List<PowerSO> GetRandomChoices()
+        {
+            List<PowerSO> choices = new List<PowerSO>();
+            if (availablePowers == null || availablePowers.Count == 0) return choices;
+
+            List<PowerSO> poolCopy = new List<PowerSO>(availablePowers);
+
+            int iterations = Mathf.Min(choicesPerLevelUp, poolCopy.Count);
+
+            for (int i = 0; i < iterations; i++)
+            {
+                int randomIndex = Random.Range(0, poolCopy.Count);
+                choices.Add(poolCopy[randomIndex]);
+                poolCopy.RemoveAt(randomIndex); 
+            }
+
+            return choices;
+        }
     }
 }

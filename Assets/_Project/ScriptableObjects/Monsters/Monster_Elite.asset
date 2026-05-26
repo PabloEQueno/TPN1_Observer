@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Monster_Elite
   m_EditorClassIdentifier: 
   monsterName: Elite
-  prefab: {fileID: 0}
+  prefab: {fileID: 2535815666828090450, guid: 611045e713852fe489a0da7243395f0c, type: 3}
   maxHealth: 35
   movementSpeed: 2
   contactDamage: 5

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10000000000000000000000000000002, type: 3}
   m_Name: FearProgression_Default
   m_EditorClassIdentifier: 
-  secondsToReachMaximumFear: 300
+  secondsToReachMaximumFear: 1000
   ranges:
   - {fileID: 11400000, guid: 20000000000000000000000000000001, type: 2}
   - {fileID: 11400000, guid: 20000000000000000000000000000002, type: 2}

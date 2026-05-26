@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Monster_Runner
   m_EditorClassIdentifier: 
   monsterName: Runner
-  prefab: {fileID: 0}
+  prefab: {fileID: 8703910458745552877, guid: 1777d239b8b3b36439d5d33f2f37fac9, type: 3}
   maxHealth: 6
   movementSpeed: 3
   contactDamage: 1

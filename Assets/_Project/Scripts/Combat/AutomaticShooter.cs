@@ -9,6 +9,9 @@ namespace TopDownSurvivors.Combat
         [SerializeField] private Projectile projectilePrefab;
         [SerializeField] private Transform firePoint;
 
+        [Header("Configuración de Rotación Visual")]
+        [SerializeField] private Transform objectToRotate;
+
         public WeaponStats WeaponStats => weaponStats;
         public TargetDetector TargetDetector => targetDetector;
         public Projectile ProjectilePrefab => projectilePrefab;
@@ -22,6 +25,15 @@ namespace TopDownSurvivors.Combat
 
             if (targetDetector.CurrentTarget != null)
             {
+                if (objectToRotate != null)
+                {
+                    Vector2 directionToTarget = (Vector2)targetDetector.CurrentTarget.position - (Vector2)objectToRotate.position;
+                    
+                    float angle = Mathf.Atan2(directionToTarget.y, directionToTarget.x) * Mathf.Rad2Deg;
+                    
+                    objectToRotate.rotation = Quaternion.Euler(0f, 0f, angle - 90f);
+                }
+
                 if (Time.time >= nextFireTime)
                 {
                     Shoot(targetDetector.CurrentTarget);
@@ -37,7 +49,6 @@ namespace TopDownSurvivors.Combat
                 }
             }
         }
-
         private void Shoot(Transform target)
         {
             Vector3 spawnPosition = firePoint != null ? firePoint.position : transform.position;

@@ -1,6 +1,8 @@
+using System.Collections.Generic;
 using UnityEngine;
-using TopDownSurvivors.Combat;
-using TopDownSurvivors.Player;
+using UnityEngine.UI;
+using TMPro;
+using TopDownSurvivors.Progression;
 using TopDownSurvivors.Menus;
 
 namespace TopDownSurvivors.UI
@@ -10,16 +12,11 @@ namespace TopDownSurvivors.UI
         [SerializeField] private GameObject root;
         [SerializeField] private LevelUpMenuController menuController;
 
-        private WeaponStats playerWeapon;
-        private PlayerHealth playerHealth;
-
-        private void Awake()
-        {
-            if (menuController == null) menuController = GetComponentInParent<LevelUpMenuController>();
-            
-            playerWeapon = FindFirstObjectByType<WeaponStats>();
-            playerHealth = FindFirstObjectByType<PlayerHealth>();
-        }
+        [Header("Ranuras Físicas de las Tarjetas (Mínimo 3)")]
+        [SerializeField] private List<Button> choiceButtons = new();
+        [SerializeField] private List<TMP_Text> titleTexts = new();
+        [SerializeField] private List<TMP_Text> descriptionTexts = new();
+        [SerializeField] private List<Image> iconImages = new();
 
         public void Show()
         {
@@ -31,41 +28,38 @@ namespace TopDownSurvivors.UI
             if (root != null) root.SetActive(false);
         }
 
-      
-
-        public void Opcion_MejorarDanio()
+        public void SetupChoices(IReadOnlyList<PowerSO> choices)
         {
-            if (playerWeapon != null)
+            Show();
+
+            for (int i = 0; i < choiceButtons.Count; i++)
             {
-                playerWeapon.AddDamage(5f); 
+                if (i >= choices.Count || choices[i] == null)
+                {
+                    if (choiceButtons[i] != null) choiceButtons[i].gameObject.SetActive(false);
+                    continue;
+                }
+
+                choiceButtons[i].gameObject.SetActive(true);
+                PowerSO power = choices[i];
+
+                if (i < titleTexts.Count && titleTexts[i] != null) titleTexts[i].text = power.DisplayName;
+                if (i < descriptionTexts.Count && descriptionTexts[i] != null) descriptionTexts[i].text = power.Description;
+                if (i < iconImages.Count && iconImages[i] != null && power.Icon != null) iconImages[i].sprite = power.Icon;
+
+                choiceButtons[i].onClick.RemoveAllListeners();
+
+                PowerSO selectedPower = power;
+                choiceButtons[i].onClick.AddListener(() => OnPowerSelected(selectedPower));
             }
-            FinalizarSeleccion();
         }
 
-        public void Opcion_MejorarCadencia()
-        {
-            if (playerWeapon != null)
-            {
-                playerWeapon.AddShotsPerSecond(1f); 
-            }
-            FinalizarSeleccion();
-        }
-
-        public void Opcion_CurarVida()
-        {
-            if (playerHealth != null)
-            {
-                playerHealth.TakeDamage(-playerHealth.MaxHealth); 
-            }
-            FinalizarSeleccion();
-        }
-
-        private void FinalizarSeleccion()
+        private void OnPowerSelected(PowerSO power)
         {
             Hide();
             if (menuController != null)
             {
-                menuController.ChoosePower(null); 
+                menuController.ChoosePower(power);
             }
         }
     }

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Monster_Brute
   m_EditorClassIdentifier: 
   monsterName: Brute
-  prefab: {fileID: 0}
+  prefab: {fileID: 7234052288275401477, guid: 8ab4ccf3c8a2b7244928d61809c85f81, type: 3}
   maxHealth: 20
   movementSpeed: 1.4
   contactDamage: 3
