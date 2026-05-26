@@ -5,15 +5,18 @@ namespace TopDownSurvivors.Menus
 {
     public sealed class PauseMenuController : MonoBehaviour
     {
+        [Header("UI Panels")]
         [SerializeField] private GameObject pausePanel;
+
+        [Header("Services")]
         [SerializeField] private SceneLoader sceneLoader;
         [SerializeField] private TimeService timeService;
-        [SerializeField] private GameManager gameManager;
+
+        [Header("Settings")]
         [SerializeField] private string mainMenuSceneName = "MainMenu";
 
         private void Update()
         {
-            
             if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P))
             {
                 TogglePause();
@@ -22,36 +25,37 @@ namespace TopDownSurvivors.Menus
 
         private void TogglePause()
         {
+            var gameManager = GameManager.Instance;
             if (gameManager == null) return;
 
-            
-            if (gameManager.CurrentState == GameState.Paused)
+            if (gameManager.CurrentState == GameState.GameOver || 
+                gameManager.CurrentState == GameState.LevelUp) 
             {
-                Resume();
+                return; 
             }
-            else if (gameManager.CurrentState == GameState.Playing)
-            {
-                Pause();
-            }
+
+            if (gameManager.CurrentState == GameState.Paused) Resume();
+            else if (gameManager.CurrentState == GameState.Playing) Pause();
         }
 
         public void Pause()
         {
             pausePanel?.SetActive(true);
             timeService?.Pause();
-            gameManager?.SetState(GameState.Paused);
+            GameManager.Instance?.SetState(GameState.Paused);
         }
 
         public void Resume()
         {
             pausePanel?.SetActive(false);
             timeService?.Resume();
-            gameManager?.SetState(GameState.Playing);
+            GameManager.Instance?.SetState(GameState.Playing);
         }
 
         public void Restart()
         {
             timeService?.Resume();
+            GameManager.Instance?.SetState(GameState.Playing);
             sceneLoader?.ReloadCurrentScene();
         }
 
@@ -61,9 +65,6 @@ namespace TopDownSurvivors.Menus
             sceneLoader?.LoadScene(mainMenuSceneName);
         }
 
-        public void Quit()
-        {
-            sceneLoader?.QuitGame();
-        }
+        public void Quit() => sceneLoader?.QuitGame();
     }
 }

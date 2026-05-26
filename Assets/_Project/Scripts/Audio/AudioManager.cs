@@ -25,11 +25,26 @@ namespace TopDownSurvivors.Audio
         [Header("Clips de Combate")]
         [SerializeField] private AudioClip playerShootClip;
         [SerializeField] private AudioClip enemyDeathClip;
+        
+        [Header("Configuración de Volumen Base (0 a 1)")]
+        private const string MusicVolKey = "Volume_Music";
+        private const string SfxVolKey = "Volume_SFX";
+        private const string UiVolKey = "Volume_UI";
 
         public AudioClip ButtonHoverClip => buttonHoverClip;
         public AudioClip ButtonClickClip => buttonClickClip;
         public AudioClip EnemyDeathClip => enemyDeathClip;
 
+        public float GetMusicVolume() => PlayerPrefs.GetFloat(MusicVolKey, 0.7f);
+        public float GetSFXVolume() => PlayerPrefs.GetFloat(SfxVolKey, 0.7f);
+        public float GetUIVolume() => PlayerPrefs.GetFloat(UiVolKey, 0.7f);
+        
+        private void Start()
+        {
+            SetMusicVolume(PlayerPrefs.GetFloat(MusicVolKey, 0.7f));
+            SetSFXVolume(PlayerPrefs.GetFloat(SfxVolKey, 0.7f));
+            SetUIVolume(PlayerPrefs.GetFloat(UiVolKey, 0.7f));
+        }
         private void Awake()
         {
             if (Instance != null && Instance != this)
@@ -40,36 +55,66 @@ namespace TopDownSurvivors.Audio
             Instance = this;
             DontDestroyOnLoad(gameObject);
         }
-
-        private void OnEnable()
+        public void SetMusicVolume(float value)
         {
-            GameManager.OnStateChanged += HandleGameStateChanged;
+            if (musicSource == null) return;
+            musicSource.volume = Mathf.Clamp01(value);
+            PlayerPrefs.SetFloat(MusicVolKey, musicSource.volume);
         }
 
-        private void OnDisable()
+        public void SetSFXVolume(float value)
         {
-            GameManager.OnStateChanged -= HandleGameStateChanged;
+            if (sfxSource == null) return;
+            sfxSource.volume = Mathf.Clamp01(value);
+            PlayerPrefs.SetFloat(SfxVolKey, sfxSource.volume);
         }
+
+        public void SetUIVolume(float value)
+        {
+            if (uiSource == null) return;
+            uiSource.volume = Mathf.Clamp01(value);
+            PlayerPrefs.SetFloat(UiVolKey, uiSource.volume);
+        }
+
+      private void OnEnable()
+{
+    UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
+}
+
+private void OnDisable()
+{
+    UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoaded;
+    if (GameManager.Instance != null)
+        GameManager.OnStateChanged -= HandleGameStateChanged;
+}
+private void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, UnityEngine.SceneManagement.LoadSceneMode mode)
+{
+    if (GameManager.Instance != null)
+    {
+        GameManager.OnStateChanged -= HandleGameStateChanged;
+        GameManager.OnStateChanged += HandleGameStateChanged;
+        
+        HandleGameStateChanged(GameManager.Instance.CurrentState);
+    }
+}
 
         private void HandleGameStateChanged(GameState newState)
         {
             switch (newState)
             {
                 case GameState.Playing:
-
-                    if (musicSource.clip == gameLoopMusic)
-                    {
-                        musicSource.volume = 0.5f; 
-                    }
-                    else
-                    {
-                        musicSource.volume = 0.4f;
-                        ChangeMusic(gameLoopMusic);
-                    }
-                    break;
+         		  	ChangeMusic(gameLoopMusic);
+         		  	musicSource.volume = 0.5f;
+          			break;
 
                 case GameState.Paused:
-                    musicSource.volume = 0.2f; 
+					ChangeMusic(pauseMenuMusic);
+                    musicSource.volume = 0.4f; 
+                    break;
+
+                case GameState.MainMenu:
+					ChangeMusic(mainMenuMusic);
+                    musicSource.volume = 0.4f; 
                     break;
 
                 case GameState.LevelUp:

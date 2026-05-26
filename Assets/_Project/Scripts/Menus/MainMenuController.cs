@@ -1,4 +1,7 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using TopDownSurvivors.Audio;
+using TopDownSurvivors.Core;
 
 namespace TopDownSurvivors.Menus
 {
@@ -8,10 +11,23 @@ namespace TopDownSurvivors.Menus
         [SerializeField] private string gameSceneName = "Game";
         [SerializeField] private GameObject optionsPanel;
 
-       
         public void Play()
         {
-            sceneLoader?.LoadScene(gameSceneName);
+            Time.timeScale = 1f;
+            
+			if (GameManager.Instance != null)
+            {
+                GameManager.Instance.SetState(GameState.Playing);
+            }
+
+            if (sceneLoader != null)
+            {
+                sceneLoader.LoadScene(gameSceneName);
+            }
+            else
+            {
+                SceneManager.LoadScene(gameSceneName);
+            }
         }
 
         public void OpenOptions()

@@ -1,17 +1,23 @@
 using UnityEngine;
+using TopDownSurvivors.Core;
 
 namespace TopDownSurvivors.Core
 {
     public sealed class SceneBootstrapper : MonoBehaviour
     {
-        [SerializeField] private GameManager gameManager;
         [SerializeField] private GameState startupState = GameState.Playing;
 
         private void Start()
-        {
-            if (gameManager != null)
+        { 
+            GameManager manager = FindFirstObjectByType<GameManager>();
+            
+            if (manager != null)
             {
-                gameManager.SetState(startupState);
+                manager.SetState(startupState);
+            }
+            else
+            {
+                Debug.LogWarning("[Bootstrapper] No se encontró un GameManager en esta escena.");
             }
         }
     }

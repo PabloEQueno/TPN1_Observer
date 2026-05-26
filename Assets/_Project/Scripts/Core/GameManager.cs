@@ -5,7 +5,9 @@ namespace TopDownSurvivors.Core
 {
     public sealed class GameManager : MonoBehaviour
     {
-        [SerializeField] private GameState initialState = GameState.Playing;
+        public static GameManager Instance { get; private set; }
+
+        [SerializeField] private GameState initialState = GameState.MainMenu;
 
         public GameState CurrentState { get; private set; }
 
@@ -13,7 +15,22 @@ namespace TopDownSurvivors.Core
 
         private void Awake()
         {
+            if (Instance != null && Instance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
+            Instance = this;     
             CurrentState = initialState;
+
+            if (transform.parent != null)
+            {
+                DontDestroyOnLoad(transform.root.gameObject);
+            }
+            else
+            {
+                DontDestroyOnLoad(gameObject);
+            }
         }
 
         private void Start()
