@@ -17,7 +17,6 @@ namespace TopDownSurvivors.Player
         public void AddXP(int amount)
         {
             currentXP += Mathf.Max(0, amount);
-            Debug.Log($"[XP LOG] El jugador ganó {amount} XP. Total actual: {currentXP}");
 
             if (playerLevel != null && currentXP >= playerLevel.XPRequiredForNextLevel)
             {
